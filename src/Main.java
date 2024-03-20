@@ -57,10 +57,7 @@ public class Main {
         System.out.println("Статус Эпиков изменился");
         taskManager.getEpicsList();
 
-        System.out.println("Удаляем Эпик по id");
-        taskManager.deleteEpicById(4);
-        System.out.println("Новый список Эпиков: ");
-        taskManager.getEpicsList();
+
         System.out.println("Получаем список Подзадач определенного эпика:");
         taskManager.getSubtasksByEpic("Epic № 1");
         System.out.println("Обновляем Epic № 1...");
@@ -74,9 +71,27 @@ public class Main {
         taskManager.deleteAllEpics();
         System.out.println("Список Эпиков пуст");
         taskManager.getEpicsList();
+        System.out.println("Список Подзадач пуст, т.к. удалены вместе со всеми эпиками");
+        taskManager.getSubtasksList();
+
+        System.out.println("Снова создаем Эпики и Подзадачи...");
+        taskManager.createEpic(new Epic("Epic № 1", new ArrayList<>()));
+        taskManager.createEpic(new Epic("Epic № 2", new ArrayList<>()));
+        taskManager.createSubtask(new Subtask("Подзадача № 1",
+                "Описание подзадачи № 1", Status.NEW, "Epic № 1"));
+        taskManager.createSubtask(new Subtask("Подзадача № 2",
+                "Описание подзадачи № 2", Status.DONE, "Epic № 1"));
+        taskManager.createSubtask(new Subtask("Подзадача № 3",
+                "Описание подзадачи № 3", Status.IN_PROGRESS, "Epic № 2"));
+
+        System.out.println("Удаляем Эпик по id");
+        taskManager.deleteEpicById(9);
+        System.out.println("Новый список Эпиков и подзадач: ");
+        taskManager.getEpicsList();
+        taskManager.getSubtasksList();
 
         System.out.println("Удаляем Подзадачу по id");
-        taskManager.deleteSubtaskById(5);
+        taskManager.deleteSubtaskById(10);
         System.out.println("Новый список Подзадач: ");
         taskManager.getSubtasksList();
         System.out.println("Удаляем все Подзадачи");
