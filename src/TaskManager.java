@@ -73,10 +73,9 @@ public class TaskManager {
         id++;
         subtask.id = id;
         subtasks.put(id, subtask);
-        ArrayList<Subtask> subtasksId = new ArrayList<>();
         for (Epic epic : epics.values()) {
             if (subtask.epicId.equals(epic.name)) {
-                epic.subtasksId.add(subtask);
+                epic.subtasksIds.add(subtask);
             }
         }
         checkStatus();
@@ -90,15 +89,15 @@ public class TaskManager {
             }
         }
         for (Epic epic : epics.values()) {
-            for (Subtask subtask1 : epic.subtasksId) {
+            for (Subtask subtask1 : epic.subtasksIds) {
                 if (subtask1.name.equals(subtask.name)) {
-                    epic.subtasksId.remove(subtask1);
+                    epic.subtasksIds.remove(subtask1);
                 }
             }
         }
         for (Epic epic : epics.values()) {
             if (subtask.epicId.equals(epic.name)) {
-                epic.subtasksId.add(subtask);
+                epic.subtasksIds.add(subtask);
             }
         }
         subtasks.put(subtask.getId(), subtask);
@@ -136,7 +135,7 @@ public class TaskManager {
             int countDone = 0;
             int countInProgress = 0;
             int totalCount = 0;
-            for (Subtask subtask : epicCheck.subtasksId) {
+            for (Subtask subtask : epicCheck.subtasksIds) {
                 if (subtask.epicId.equals(epicCheck.name) && subtask.status == Status.NEW) {
                     countNew++;
                     totalCount++;
@@ -148,7 +147,7 @@ public class TaskManager {
                     totalCount++;
                 }
             }
-            if (countNew == totalCount || epicCheck.subtasksId == null) {
+            if (countNew == totalCount || epicCheck.subtasksIds == null) {
                 epicCheck.status = Status.NEW;
             } else if (countDone == totalCount) {
                 epicCheck.status = Status.DONE;
@@ -179,13 +178,13 @@ public class TaskManager {
     public void deleteEpicById(int key) {
         Epic check = epics.get(key);
         epics.remove(key);
-        ArrayList<Integer> temporaryId = new ArrayList<>();
+        ArrayList<Integer> temporaryIds = new ArrayList<>();
         for (Subtask subtask : subtasks.values()) {
             if (subtask.epicId.equals(check.name)) {
-                temporaryId.add(subtask.id);
+                temporaryIds.add(subtask.id);
             }
         }
-        subtasks.keySet().removeAll(temporaryId);
+        subtasks.keySet().removeAll(temporaryIds);
     }
 
 
